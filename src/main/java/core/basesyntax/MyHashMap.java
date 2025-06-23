@@ -80,14 +80,15 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         int newCapacity = table.length * 2;
         Node<K, V>[] newTable = (Node<K, V>[]) new Node[newCapacity];
         
-        for (Node<K, V> node : table) {
+        for (Node<K, V> head : table) {
+            Node<K, V> node = head;
+            
             while (node != null) {
-                int newIndex = (node.key == null ? 0 : Math.abs(node.key.hashCode()) % newCapacity);
                 Node<K, V> next = node.next;
                 
+                int newIndex = (node.key == null ? 0 : Math.abs(node.key.hashCode()) % newCapacity);
                 node.next = newTable[newIndex];
                 newTable[newIndex] = node;
-                
                 node = next;
             }
         }
